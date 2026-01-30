@@ -274,6 +274,8 @@ export class ArticlePage {
 
   /** Add a comment */
   async addComment(body: string) {
+    // Wait for app to render
+    await new Promise(resolve => setTimeout(resolve, 1500));
     await this.page.getByPlaceholder('Write a comment...').fill(body);
     await this.page.getByRole('button', { name: 'Post Comment' }).click();
   }

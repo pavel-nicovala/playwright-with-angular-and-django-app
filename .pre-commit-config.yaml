@@ -1,5 +1,6 @@
 default_language_version:
-  python: python3.12
+  # Use whatever python is available on the machine/runner (CI pins via setup-python).
+  python: python3
 
 # Skip generated / binary / vendor outputs
 exclude: |
@@ -30,4 +31,3 @@ repos:
           )$
       - id: check-merge-conflict
       - id: mixed-line-ending
-

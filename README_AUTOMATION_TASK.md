@@ -1,83 +1,3 @@
-# ![RealWorld Example App](logo.png)
-
-> ### Django REST Framework + Angular codebase containing real world examples (CRUD, auth, advanced patterns, etc) that adheres to the [RealWorld](https://github.com/gothinkster/realworld) spec and API.
-
-
-### [Demo](https://thanhdev.pythonanywhere.com/)&nbsp;&nbsp;&nbsp;&nbsp;[RealWorld](https://github.com/gothinkster/realworld)
-
-
-This codebase was created to demonstrate a fully fledged fullstack application built with **Django REST Framework + Angular** including CRUD operations, authentication, routing, pagination, and more.
-
-We've gone to great lengths to adhere to the **Django REST Framework + Angular** community styleguides & best practices.
-
-For more information on how to this works with other frontends/backends, head over to the [RealWorld](https://github.com/gothinkster/realworld) repo.
-
-
-# How it works
-
-> See how the Medium.com clone (called Conduit) is built using Django REST Framework and Angular.
-
-# Getting started
-
-## Prerequisites
-Ensure you have Python 3 and Node.js installed on your system. The current project dependency versions are:
-- Python 3.10
-- Node.js 18.5.0
-
-## Installation
-### Option 1: Using Docker Compose (Recommended)
-The simplest way to run the application is using Docker Compose:
-
-```shell
-docker compose up -d
-```
-**Access the web application at [http://localhost:4200](http://localhost:4200).**
-### Option: 2 Frontend: Choose 1 of 2 ways below:
-- Install frontend dependencies and start frontend locally:
-```shell
-npm --prefix=frontend install
-npm --prefix=frontend start
-```
-This command will install and start the Angular development server. You can access the Angular application through your web browser at `http://localhost:4200`.
-
-- Install and build frontend as static files (Choose this if you don't want to make any changes to Frontend project):
-```shell
-npm --prefix=frontend install
-npm --prefix=frontend run build
-```
-
-### Option: 2 Backend:
-- Set up a virtual environment
-```shell
-# Install environment and dependencies
-python3 -m venv .venv
-source .venv/bin/activate
-
-# or use this command on Windows
-python3 -m venv .venv
-.venv/Scripts/activate
-```
-
-- Install backend dependencies:
-```shell
-pip install -r backend/requirements.txt
-```
-
-- Apply database migrations:
-```shell
-# Apply migrations
-python backend/manage.py migrate
-```
-
-- Run the Django development server:
-```shell
-# Run server
-python backend/manage.py runserver
-```
-
-Now, your local server should be running, and you can access this Django/Angular application through your web browser at http://localhost:8000.
-
-
 # Playwright E2E Tests
 
 End-to-end tests for the Conduit-style app (Angular frontend, Django REST backend).
@@ -87,7 +7,7 @@ End-to-end tests for the Conduit-style app (Angular frontend, Django REST backen
 ## 1. Test structure
 
 - **`frontend/playwright/specs/`** – Test files:
-  - **`1-auth.spec.ts`** – Sign up, login success, login error (wrong password).
+  - **`1-auth.spec.ts`** – Sign up, login success, login error (wrong password). 
   - **`2-article.spec.ts`** – Register → login → create article → assert it appears in Global Feed.
   - **`3-follow-feed.spec.ts`** – User A follows User B, User B publishes article, article appears in User A's My Feed.
   - **`4-edit-delete-article.spec.ts`** – Create article → edit body/tags → delete → assert it disappears from lists.
@@ -112,8 +32,8 @@ From the **project root** (where `docker-compose.yml` lives):
 docker compose up -d --build
 ```
 
-- **Backend:** http://localhost:8000
-- **Frontend:** http://localhost:4200
+- **Backend:** http://localhost:8000  
+- **Frontend:** http://localhost:4200  
 
 Wait until both are up (e.g. open the frontend in a browser or poll `/api/tags` and `/`). The E2E workflow waits for both before running tests.
 
@@ -159,7 +79,7 @@ npm run test:e2e:debug
 
 - Opens the Playwright Inspector and runs tests in headed mode so you can step through.
 - **Pause in code:** add `await page.pause()` in a spec (e.g. before a failing line). When the test hits it, execution stops and the Inspector lets you explore the page, console, and continue/step.
-- Run a single file:
+- Run a single file:  
   `npx playwright test -c playwright/playwright.config.ts --debug specs/1-auth.spec.ts`
 
 ### HTML report
@@ -227,5 +147,6 @@ The **`.github/workflows/e2e.yml`** workflow:
 4. **Clear DB:** `docker compose exec -T backend sh -c "cd /app && ./clear_db.sh"`.
 5. **Node:** setup-node (e.g. Node 20), npm cache using `frontend/package-lock.json`.
 6. **Install:** `npm ci` in `frontend`, then `npx playwright install --with-deps chromium`.
-7. **Run E2E:** `npx playwright test -c playwright/playwright.config.ts --project=chromium`
+7. **Run E2E:** `npx playwright test -c playwright/playwright.config.ts --project=chromium` 
 8. **Artifact:** On success or failure, upload `frontend/playwright-report/` as the `playwright-report` artifact. Download it from the run and open with `npx playwright show-report` to inspect failures.
+

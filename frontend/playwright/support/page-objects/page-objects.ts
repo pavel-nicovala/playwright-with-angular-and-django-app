@@ -174,7 +174,30 @@ export class EditorPage {
   }
 
   async submit() {
+    // When editing, ensure the PUT completes before continuing
+    const url = new URL(this.page.url());
+    const hashParts = url.hash.split('/').filter(Boolean); 
+    const slug = hashParts[hashParts.length - 1];
+    const isEdit = url.hash.includes('/editor/') && !!slug && slug !== 'editor';
+
+    const responsePromise = this.page.waitForResponse((res) => {
+      const method = res.request().method();
+      const okStatus = res.status() >= 200 && res.status() < 400;
+      if (!okStatus) return false;
+
+      if (isEdit) {
+        return (
+          method === 'PUT' &&
+          res.url().includes('/articles/') &&
+          res.url().includes(slug)
+        );
+      }
+
+      return method === 'POST' && res.url().includes('/articles');
+    });
+
     await this.page.getByRole('button', { name: 'Publish Article' }).click();
+    await responsePromise;
   }
 
   async createArticle(data: ArticleFormData) {
@@ -242,7 +265,7 @@ export class ArticlePage {
   async expectBodyToContain(text: string) {
     const bodyContainer = this.page.locator('.article-content');
     await bodyContainer.waitFor({ state: 'visible', timeout: 15_000 });
-    await expect(bodyContainer.getByText(text, { exact: false })).toBeVisible();
+    await expect(bodyContainer).toContainText(text, { timeout: 15_000 });
   }
 
   async expectTagVisible(tag: string) {

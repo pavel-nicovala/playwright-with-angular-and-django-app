@@ -1,1 +1,74 @@
+name: e2e
 
+on:
+  push:
+  pull_request:
+
+jobs:
+  e2e:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+
+      # Docker Compose can create a root-owned `frontend/node_modules/` directory on the host
+      # due to the `/app/node_modules` volume mount. That later breaks `npm ci` with EACCES.
+      - name: Ensure node_modules is writable
+        run: |
+          sudo rm -rf frontend/node_modules
+          mkdir -p frontend/node_modules
+
+      - name: Install frontend dependencies
+        working-directory: frontend
+        run: npm ci
+
+      - name: Install Playwright browsers
+        working-directory: frontend
+        run: npx playwright install --with-deps chromium
+
+      - name: Start app (Docker Compose)
+        run: docker compose up -d --build
+
+      - name: Wait for backend
+        run: |
+          for i in {1..60}; do
+            if curl -fsS "http://localhost:8000/api/tags" >/dev/null; then
+              exit 0
+            fi
+            sleep 2
+          done
+          echo "Backend did not become ready in time" >&2
+          exit 1
+
+      - name: Wait for frontend
+        run: |
+          for i in {1..60}; do
+            if curl -fsS "http://localhost:4200/" >/dev/null; then
+              exit 0
+            fi
+            sleep 2
+          done
+          echo "Frontend did not become ready in time" >&2
+          exit 1
+
+      - name: Clear DB
+        run: docker compose exec -T backend sh -c "cd /app && ./clear_db.sh"
+
+      - name: Run Playwright E2E (chromium)
+        working-directory: frontend
+        run: npx playwright test -c playwright/playwright.config.ts --project=chromium
+
+      - name: Upload Playwright report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: frontend/playwright-report/

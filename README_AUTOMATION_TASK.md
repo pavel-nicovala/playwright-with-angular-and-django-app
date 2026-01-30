@@ -7,7 +7,7 @@ End-to-end tests for the Conduit-style app (Angular frontend, Django REST backen
 ## 1. Test structure
 
 - **`frontend/playwright/specs/`** – Test files:
-  - **`1-auth.spec.ts`** – Sign up, login success, login error (wrong password). 
+  - **`1-auth.spec.ts`** – Sign up, login success, login error (wrong password).
   - **`2-article.spec.ts`** – Register → login → create article → assert it appears in Global Feed.
   - **`3-follow-feed.spec.ts`** – User A follows User B, User B publishes article, article appears in User A's My Feed.
   - **`4-edit-delete-article.spec.ts`** – Create article → edit body/tags → delete → assert it disappears from lists.
@@ -32,8 +32,8 @@ From the **project root** (where `docker-compose.yml` lives):
 docker compose up -d --build
 ```
 
-- **Backend:** http://localhost:8000  
-- **Frontend:** http://localhost:4200  
+- **Backend:** http://localhost:8000
+- **Frontend:** http://localhost:4200
 
 Wait until both are up (e.g. open the frontend in a browser or poll `/api/tags` and `/`). The E2E workflow waits for both before running tests.
 
@@ -79,7 +79,7 @@ npm run test:e2e:debug
 
 - Opens the Playwright Inspector and runs tests in headed mode so you can step through.
 - **Pause in code:** add `await page.pause()` in a spec (e.g. before a failing line). When the test hits it, execution stops and the Inspector lets you explore the page, console, and continue/step.
-- Run a single file:  
+- Run a single file:
   `npx playwright test -c playwright/playwright.config.ts --debug specs/1-auth.spec.ts`
 
 ### HTML report
@@ -147,6 +147,5 @@ The **`.github/workflows/e2e.yml`** workflow:
 4. **Clear DB:** `docker compose exec -T backend sh -c "cd /app && ./clear_db.sh"`.
 5. **Node:** setup-node (e.g. Node 20), npm cache using `frontend/package-lock.json`.
 6. **Install:** `npm ci` in `frontend`, then `npx playwright install --with-deps chromium`.
-7. **Run E2E:** `npx playwright test -c playwright/playwright.config.ts --project=chromium` 
+7. **Run E2E:** `npx playwright test -c playwright/playwright.config.ts --project=chromium`
 8. **Artifact:** On success or failure, upload `frontend/playwright-report/` as the `playwright-report` artifact. Download it from the run and open with `npx playwright show-report` to inspect failures.
-

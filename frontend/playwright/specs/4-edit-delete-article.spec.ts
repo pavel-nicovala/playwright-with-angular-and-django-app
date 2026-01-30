@@ -48,7 +48,7 @@ test.describe.serial('Edit & Delete Article', () => {
     await editorPage.createArticle(article);
     await editorPage.expectSuccessMessage();
 
-    // Open article from home to get to article page 
+    // Open article from home to get to article page
     await header.clickHome();
     await page.getByRole('heading', { name: article.title }).click();
     await expect(page).toHaveURL(/\/#\/article\//);

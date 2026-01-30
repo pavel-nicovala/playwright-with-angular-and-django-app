@@ -176,7 +176,7 @@ export class EditorPage {
   async submit() {
     // When editing, ensure the PUT completes before continuing
     const url = new URL(this.page.url());
-    const hashParts = url.hash.split('/').filter(Boolean); 
+    const hashParts = url.hash.split('/').filter(Boolean);
     const slug = hashParts[hashParts.length - 1];
     const isEdit = url.hash.includes('/editor/') && !!slug && slug !== 'editor';
 

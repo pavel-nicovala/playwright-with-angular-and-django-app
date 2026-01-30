@@ -39,7 +39,7 @@ test.describe.serial('Follow Feed', () => {
     await registerPage.register(userA);
     await expect(page).toHaveURL(/#\/login/);
 
-    // Register User B 
+    // Register User B
     await header.clickSignUp();
     await registerPage.expectHeading();
     await registerPage.register(userB);
@@ -60,7 +60,7 @@ test.describe.serial('Follow Feed', () => {
     await profilePage.goto(userB.username);
     await profilePage.followUser(userB.username);
 
-    // Logout User A 
+    // Logout User A
     await header.clickSettings();
     await settingsPage.logout();
     await expect(page).toHaveURL(/#\/$/);
@@ -77,7 +77,7 @@ test.describe.serial('Follow Feed', () => {
     await editorPage.createArticle(article);
     await editorPage.expectSuccessMessage();
 
-    // Logout User B 
+    // Logout User B
     await header.clickSettings();
     await settingsPage.logout();
     await expect(page).toHaveURL(/#\/$/);
@@ -88,7 +88,7 @@ test.describe.serial('Follow Feed', () => {
     await loginPage.login({ email: userA.email, password: userA.password });
     await expect(page).not.toHaveURL(/#\/login/);
 
-    // User A goes to Home and asserts that the article is visible in both Global Feed and My Feed  
+    // User A goes to Home and asserts that the article is visible in both Global Feed and My Feed
     await header.clickHome();
     await expect(
       page.getByRole('heading', { name: article.title }),

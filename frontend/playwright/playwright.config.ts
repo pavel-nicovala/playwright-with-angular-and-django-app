@@ -11,8 +11,8 @@ export default defineConfig({
     baseURL: 'http://localhost:4200',
     apiURL: 'http://localhost:8000',
     trace: 'on-first-retry',
-    screenshot: 'only-on-failure',
-    video: 'on-first-retry',
+    screenshot: 'on',
+    video: 'on',
   } as Record<string, string>,
   projects: [
     { name: 'chromium', use: { ...devices['Desktop Chrome'] } },

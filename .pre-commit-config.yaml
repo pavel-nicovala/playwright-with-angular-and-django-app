@@ -1,0 +1,28 @@
+default_language_version:
+  python: python3.12
+
+# Skip generated / binary / vendor outputs
+exclude: |
+  (?x)^(
+    backend/db\.sqlite3|
+    frontend/node_modules/|
+    frontend/playwright-report/|
+    frontend/test-results/|
+    frontend/blob-report/|
+    frontend/dist/|
+    backend/__pycache__/|
+    backend/\.venv/
+  )
+
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.6.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+      - id: check-toml
+      - id: check-json
+      - id: check-merge-conflict
+      - id: mixed-line-ending
+

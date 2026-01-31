@@ -5,6 +5,7 @@ import { QueryArticlesParams } from "../../common/models/api/article.model";
 import { NgClass } from '@angular/common';
 import { ArticlesFeedComponent } from '../article/feed/articles-feed.component';
 import { ArticleTagsComponent } from '../article/article-tags/article-tags.component';
+import { PavelWidgetComponent } from '../../shared/pavel-widget/pavel-widget.component';
 
 @Component({
   selector: 'app-home',
@@ -14,7 +15,8 @@ import { ArticleTagsComponent } from '../article/article-tags/article-tags.compo
   imports: [
     NgClass,
     ArticlesFeedComponent,
-    ArticleTagsComponent
+    ArticleTagsComponent,
+    PavelWidgetComponent
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })

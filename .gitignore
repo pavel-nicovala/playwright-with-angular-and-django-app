@@ -27,6 +27,10 @@ __pycache__
 .DS_Store
 Thumbs.db
 backend/db.sqlite3
+backend/*.sqlite3
+backend/*.sqlite3-journal
+backend/*.sqlite3-wal
+backend/*.sqlite3-shm
 
 #log files
 npm-debug.log*

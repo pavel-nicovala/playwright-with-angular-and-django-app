@@ -30,4 +30,3 @@ export class PavelWidgetComponent implements AfterViewInit, OnDestroy {
     this.reactRoot = null;
   }
 }
-
